@@ -13,17 +13,20 @@ namespace Gym
         private string name;
         private int visitcounter;
 
+        private static int membercounter = 0;
         public GymMember(int id, string name, int visitcounter)
         {
             this.id = id;
             this.name = name;
             this.visitcounter = visitcounter;
+            membercounter++;
         }
         public GymMember(int id, string name)
         {
             this.id = id;
             this.name = name;
             this.visitcounter = 0;
+            membercounter++;
         }
     }
 }
