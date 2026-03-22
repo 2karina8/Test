@@ -10,7 +10,7 @@ namespace Gym
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("i like potato");
+            Console.WriteLine("i like mamy");
         }
     }
 }
