@@ -6,11 +6,11 @@ using System.Threading.Tasks;
 
 namespace Gym
 {
-    internal class GymMember
+    class GymMember
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("i like mamy");
+            
         }
     }
 }
