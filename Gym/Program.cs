@@ -45,9 +45,19 @@ namespace Gym
             else 
                 return false;
         }
+        public int VisitCount // створила таку функцію, де я можу читати і брати значення, але не можу змінювати
 
-
-
-
+        {
+            get {  return visitcounter; }
+        }
+        public static int GetMemberCount()
+        {
+            return membercounter;
+        }
+        public override string ToString()
+        {
+            return $"ID: {id}, NAME: {name}, VISITS:{visitcounter}";
+        }
     }
+    
 }
