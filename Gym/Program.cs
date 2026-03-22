@@ -31,7 +31,7 @@ namespace Gym
             membercounter++;
         }
         // метод додавання відвідування та метод перевірки, чи досягнуто певної кількості відвідувань.
-        public void Visit() // для підрахунку к-сті відвідувачів
+        public void AddVisit() // для підрахунку к-сті відвідувачів
         {
             visitcounter++;
         }
@@ -59,5 +59,30 @@ namespace Gym
             return $"ID: {id}, NAME: {name}, VISITS:{visitcounter}";
         }
     }
-    
+    class Program
+    {
+        static void Main()
+        {
+            GymMember member1 = new GymMember(0983, "Karina", 8);
+            GymMember member2 = new GymMember(4912, "Oleh");
+            GymMember member3 = new GymMember(1840, "Anna", 4);
+            GymMember member4 = new GymMember(0050, "Alla", 1);
+            GymMember member5 = new GymMember(1234, "Yaroslav");
+
+            member2.AddVisit();
+            member2.AddVisit();
+            member5.AddVisit();
+
+            System.Console.WriteLine(member1.ToString());
+            System.Console.WriteLine(member2.ToString());
+            System.Console.WriteLine(member3.ToString());
+            System.Console.WriteLine(member4.ToString());
+            System.Console.WriteLine(member5.ToString());
+
+            System.Console.WriteLine(member2.Reachedvisit(2));
+
+            System.Console.WriteLine(GymMember.GetMemberCount());
+        }
+        
+    }
 }
