@@ -4,11 +4,15 @@ using System.Linq;
 using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.IO;
+using System.Text.Json;
 namespace Gym
 {
     class GymMember
     {
+        public GymMember()
+        {
+        }
         private readonly int id; // айдішка
         private string name; // ім'я
         private int visitcounter; // к-сть відвідувань
@@ -58,30 +62,52 @@ namespace Gym
         {
             return $"ID: {id}, NAME: {name}, VISITS:{visitcounter}";
         }
+        // 
+        public void SaveJson(string path)
+        {
+            string json = JsonSerializer.Serialize(this);
+            File.WriteAllText(path, json);
+        }
+        public static GymMember LoadFromJson(string path)
+        {
+            string json = File.ReadAllText(path);
+            return JsonSerializer.Deserialize<GymMember>(json);
+        }
     }
     class Program
     {
         static void Main()
         {
-            GymMember member1 = new GymMember(0983, "Karina", 8);
+            GymMember member1 = new GymMember(4983, "Karina", 8);
             GymMember member2 = new GymMember(4912, "Oleh");
             GymMember member3 = new GymMember(1840, "Anna", 4);
-            GymMember member4 = new GymMember(0050, "Alla", 1);
-            GymMember member5 = new GymMember(1234, "Yaroslav");
+            GymMember member4 = new GymMember(1250, "Alla", 1);
+            GymMember member5 = new GymMember(9244, "Yaroslav");
 
             member2.AddVisit();
             member2.AddVisit();
             member5.AddVisit();
 
-            System.Console.WriteLine(member1.ToString());
-            System.Console.WriteLine(member2.ToString());
-            System.Console.WriteLine(member3.ToString());
-            System.Console.WriteLine(member4.ToString());
-            System.Console.WriteLine(member5.ToString());
+            Console.WriteLine(member1.ToString());
+            Console.WriteLine(member2.ToString());
+            Console.WriteLine(member3.ToString());
+            Console.WriteLine(member4.ToString());
+            Console.WriteLine(member5.ToString());
 
-            System.Console.WriteLine(member2.Reachedvisit(2));
+            Console.WriteLine(member4.Reachedvisit(2));
+            Console.WriteLine(member2.Reachedvisit(2));
 
-            System.Console.WriteLine(GymMember.GetMemberCount());
+            Console.WriteLine(GymMember.GetMemberCount());
+            member1.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
+            member2.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
+            member3.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
+            member4.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
+            member5.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
+
+            GymMember loaded = GymMember.LoadFromJson(@"C:\Users\KarinaL\Desktop\member.json");
+
+            Console.WriteLine("З файлу:");
+            Console.WriteLine(loaded);
         }
         
     }
