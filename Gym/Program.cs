@@ -13,11 +13,11 @@ namespace Gym
         public GymMember()
         {
         }
-        public int id { get; set; }
-        public string name { get; set; }
-        public int visitcounter { get; set; }
+        private readonly int id;
+        private string name;
+        private int visitcounter;
 
-        public static int membercounter = 0; // рахувати мемберів
+        private static int membercounter = 0;
 
         // конструктори 
         public GymMember(int id, string name, int visitcounter) // конструктор для visitcounter =! 0
