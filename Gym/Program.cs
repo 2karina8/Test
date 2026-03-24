@@ -13,11 +13,11 @@ namespace Gym
         public GymMember()
         {
         }
-        private readonly int id; // айдішка
-        private string name; // ім'я
-        private int visitcounter; // к-сть відвідувань
+        public int id { get; set; }
+        public string name { get; set; }
+        public int visitcounter { get; set; }
 
-        private static int membercounter = 0; // рахувати мемберів
+        public static int membercounter = 0; // рахувати мемберів
 
         // конструктори 
         public GymMember(int id, string name, int visitcounter) // конструктор для visitcounter =! 0
@@ -39,7 +39,7 @@ namespace Gym
         {
             visitcounter++;
         }
-        public bool Reachedvisit(int cnst) // cnst - consta - потрібна кількість відвідувачів
+        public bool Reachedvisit(int cnst) // cnst - потрібна кількість відвідувачів
         // логіка: досягнення певної кількості відвідувань
         {
             if (visitcounter >= cnst)
@@ -58,11 +58,13 @@ namespace Gym
         {
             return membercounter;
         }
+        // overrid для того щоб перевизначити стандартний метод 
+        // ToString() і зробити власний формат виводу даних про користувача.
         public override string ToString()
         {
             return $"ID: {id}, NAME: {name}, VISITS:{visitcounter}";
         }
-        // 
+        
         public void SaveJson(string path)
         {
             string json = JsonSerializer.Serialize(this);
@@ -94,20 +96,30 @@ namespace Gym
             Console.WriteLine(member4.ToString());
             Console.WriteLine(member5.ToString());
 
-            Console.WriteLine(member4.Reachedvisit(2));
-            Console.WriteLine(member2.Reachedvisit(2));
+            Console.WriteLine($"Чи досягнув 4 клієнт 2х відвідувань? - {member4.Reachedvisit(2)}");
+            Console.WriteLine($"Чи досягнув 2 клієнт 2х відвідувань? - {member2.Reachedvisit(2)}");
 
-            Console.WriteLine(GymMember.GetMemberCount());
-            member1.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
-            member2.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
-            member3.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
-            member4.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
-            member5.SaveJson(@"C:\Users\KarinaL\Desktop\member.json");
+            List<GymMember> members = new List<GymMember>()
+            {
+                member1,
+                member2,
+                member3,
+                member4,
+                member5
+            };
+            string path = @"C:\Users\KarinaL\Desktop\members.json";
 
-            GymMember loaded = GymMember.LoadFromJson(@"C:\Users\KarinaL\Desktop\member.json");
+            string json = JsonSerializer.Serialize(members, new JsonSerializerOptions { WriteIndented = true });
+            File.WriteAllText(path, json);
+            string jsonFromFile = File.ReadAllText(path);
+            List<GymMember> loadedMembers = JsonSerializer.Deserialize<List<GymMember>>(jsonFromFile);
 
             Console.WriteLine("З файлу:");
-            Console.WriteLine(loaded);
+
+            foreach (var m in loadedMembers)
+            {
+                Console.WriteLine(m);
+            }
         }
         
     }
